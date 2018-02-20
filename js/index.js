@@ -2,8 +2,7 @@ $(document).ready(function() {
 
     //  Instantiate IOTA with provider 'http://localhost:14265'
     var iota = new IOTA({
-        'host': 'http://localhost',
-        'port': 14265
+        'provider': 'http://nodes.iota.fm:80'
     });
 
     var seed;
@@ -77,13 +76,14 @@ $(document).ready(function() {
                             'name': message.name,
                             'message': message.message,
                             'value': transfer[0].value
-                        }
+                        };
+
                         transferList.push(newTx);
 
                     } catch (e) {
                         console.log("Transaction did not contain any JSON Data");
                     }
-                })
+                });
 
                 // Increase the counter of checkedTxs
                 checkedTxs = accountData.transfers.length;
@@ -95,7 +95,7 @@ $(document).ready(function() {
                 updateLeaderboardHTML(transferList);
 
             }
-        })
+        });
     }
 
 
@@ -129,7 +129,7 @@ $(document).ready(function() {
 
         if (!seed) {
             console.log("You did not enter your seed yet");
-            return
+            return;
         }
 
         // Deterministically generates a new address for the specified seed with a checksum
@@ -144,6 +144,6 @@ $(document).ready(function() {
 
                 console.log(e);
             }
-        })
-    })
+        });
+    });
 });

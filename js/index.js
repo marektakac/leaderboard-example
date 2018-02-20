@@ -80,7 +80,7 @@ $(document).ready(function() {
                         }
                         transferList.push(newTx);
 
-                    } catch(e) {
+                    } catch (e) {
                         console.log("Transaction did not contain any JSON Data");
                     }
                 })
@@ -133,7 +133,7 @@ $(document).ready(function() {
         }
 
         // Deterministically generates a new address for the specified seed with a checksum
-        iota.api.getNewAddress( seed, { 'checksum': true }, function( e, address ) {
+        iota.api.getNewAddress(seed, { 'checksum': true }, function(e, address) {
 
             if (!e) {
 

@@ -62,7 +62,7 @@ $(document).ready(function() {
 
             // Update total balance
             updateBalanceHTML(balance);
-        })
+        });
     }
 
     //
@@ -74,17 +74,17 @@ $(document).ready(function() {
         console.log("Generating an address");
 
         // Deterministically Generates a new address with checksum for the specified seed
-        iota.api.getNewAddress(seed, {'checksum': true}, function(e,address) {
+        iota.api.getNewAddress(seed, { 'checksum': true }, function(e, address) {
 
-             if (!e) {
+            if (!e) {
 
-                console.log("NEW ADDRESS GENERATED: ", address)
+                console.log("NEW ADDRESS GENERATED: ", address);
 
                 address = address;
                 // Update the HTML on the site
-                updateAddressHTML(address)
+                updateAddressHTML(address);
             }
-        })
+        });
     }
 
 
@@ -98,16 +98,16 @@ $(document).ready(function() {
             'address': address,
             'value': parseInt(value),
             'message': messageTrytes
-        }]
+        }];
 
         console.log("Sending Transfer", transfer);
 
         // We send the transfer from this seed, with depth 4 and minWeightMagnitude 18
         iota.api.sendTransfer(seed, 4, 9, transfer, function(e) {
 
-            if (e){
+            if (e) {
 
-                var html = '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>ERROR!</strong>' + e + '.</div>'
+                var html = '<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>ERROR!</strong>' + e + '.</div>';
                 $("#send__success").html(JSON.stringify());
 
                 $("#submit").toggleClass("disabled");
@@ -116,7 +116,7 @@ $(document).ready(function() {
 
             } else {
 
-                var html = '<div class="alert alert-info alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> You have successfully sent your transaction. If you want to make another one make sure that this transaction is confirmed first (check in your client).</div>'
+                var html = '<div class="alert alert-info alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Success!</strong> You have successfully sent your transaction. If you want to make another one make sure that this transaction is confirmed first (check in your client).</div>';
                 $("#send__success").html(html);
 
                 $("#submit").toggleClass("disabled");
@@ -126,7 +126,7 @@ $(document).ready(function() {
                 balance = balance - value;
                 updateBalanceHTML(balance);
             }
-        })
+        });
     }
 
     //
@@ -157,10 +157,10 @@ $(document).ready(function() {
     //
     $("#genAddress").on("click", function() {
         if (!seed)
-            return
+            return;
 
         genAddress();
-    })
+    });
 
     //
     // Send a new message
@@ -168,15 +168,15 @@ $(document).ready(function() {
     $("#submit").on("click", function() {
 
         if (!seed) {
-            var html = '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>No Seed!</strong> You have not entered your seed yet. Do so on the Menu on the right.</div>'
+            var html = '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>No Seed!</strong> You have not entered your seed yet. Do so on the Menu on the right.</div>';
             $("#send__success").html(html);
-            return
+            return;
         }
 
         if (!balance || balance === 0) {
-            var html = '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>No Tokens!</strong> You do not have enough IOTA tokens. Make sure you have enough confirmed tokens.</div>'
+            var html = '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>No Tokens!</strong> You do not have enough IOTA tokens. Make sure you have enough confirmed tokens.</div>';
             $("#send__success").html(html);
-            return
+            return;
         }
 
         var name = $("#name").val();
@@ -185,19 +185,19 @@ $(document).ready(function() {
         var message = $("#message").val();
 
         if (!name || !value || !message)
-            return
+            return;
 
         if (value > balance) {
-            var html = '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Value too high!</strong> You have specified a too high value.</div>'
+            var html = '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Value too high!</strong> You have specified a too high value.</div>';
             $("#send__success").html(html);
-            return
+            return;
         }
 
         // the message which we will send with the transaction
         var messageToSend = {
             'name': name,
             'message': message
-        }
+        };
 
         // Convert the user message into trytes
         // In case the user supplied non-ASCII characters we throw an error
@@ -217,9 +217,9 @@ $(document).ready(function() {
         } catch (e) {
 
             console.log(e);
-            var html = '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Wrong Format!</strong> Your message contains an illegal character. Make sure you only enter valid ASCII characters.</div>'
+            var html = '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Wrong Format!</strong> Your message contains an illegal character. Make sure you only enter valid ASCII characters.</div>';
             $("#send__success").html(html);
 
         }
-    })
+    });
 });

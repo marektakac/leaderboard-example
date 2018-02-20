@@ -7,6 +7,9 @@ $(document).ready(function() {
         'provider': 'http://nodes.iota.fm:80'
     });
 
+    curl.init();
+    curl.overrideAttachToTangle(iota);
+
     var seed;
     var balance = 0;
     var address;
@@ -102,7 +105,7 @@ $(document).ready(function() {
         console.log("Sending Transfer", transfer);
 
         // We send the transfer from this seed, with depth 4 and minWeightMagnitude 18
-        iota.api.sendTransfer(seed, 4, 9, transfer, function(e) {
+        iota.api.sendTransfer(seed, 4, 14, transfer, function(e) {
 
             if (e) {
 
